@@ -3,7 +3,7 @@ class redmine::install {
     path        => ['/bin','/usr/bin'],
     environment => ['HOME=/root','RAILS_ENV=production','REDMINE_LANG=en'],
     provider    => 'shell',
-    cwd         => '/var/www/redmine',
+    cwd         => "${redmine::docroot}",
   }
 
   package { ['ruby-devel', 'mysql-devel', 'apr-devel', 'apr-util-devel']:
@@ -16,10 +16,11 @@ class redmine::install {
     provider => gem,
   }
   ->
-  vcsrepo { '/var/www/redmine':
+  vcsrepo { "${redmine::docroot}":
     ensure => present,
     provider => git,
-    source => "https://github.com/redmine/redmine",
+    source => 'https://github.com/redmine/redmine',
+    revision => "${redmine::version}",
   }
   ->
   exec { "bundle":

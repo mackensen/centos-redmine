@@ -1,5 +1,6 @@
 class redmine (
-  
+  $version = '2.5.2',
+  $docroot = '/var/www/redmine',
 ) {
   class { 'redmine::install': }->
   class { 'redmine::config': }->

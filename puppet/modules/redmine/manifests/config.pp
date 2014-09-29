@@ -1,5 +1,5 @@
 class redmine::config {
-  file { '/var/www/redmine/config/database.yml':
+  file { "${redmine::docroot}/config/database.yml":
     replace => no,
     ensure => present,
     source => 'puppet:///modules/redmine/database.yml',
@@ -7,6 +7,6 @@ class redmine::config {
 
   apache::vhost { 'local.redmine.dev':
     port => '80',
-    docroot => '/var/www/redmine/public',
+    docroot => "${redmine::docroot}/public",
   }
 }
