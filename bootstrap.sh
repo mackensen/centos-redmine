@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 # Bootstrap environment
+yum clean all
 yum update
 yum install -y puppet vim-common vim-enhanced vim-minimal rubygems ruby-devel
 
