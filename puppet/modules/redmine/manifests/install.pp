@@ -11,7 +11,7 @@ class redmine::install {
     provider => yum,
   }
   ->
-  package { ['rake']:
+  package { ['bundler']:
     ensure => present,
     provider => gem,
   }
@@ -22,11 +22,9 @@ class redmine::install {
     source => "https://github.com/redmine/redmine",
   }
   ->
-  bundler::install { '/var/www/redmine':
-    user => 'root',
-    group => 'root',
-    deployment => false,
-    without => 'development test postgresql sqlite rmagick',
+  exec { "bundle":
+    command => "bundle install --gemfile ${redmine::docroot}/Gemfile --without development test postgresql sqlite rmagick",
+    unless => 'bundle check',
     timeout => 0,
   }
 }
