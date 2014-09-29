@@ -12,7 +12,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Every Vagrant virtual environment requires a box to build off of.
   config.vm.box = "centos6"
   config.vm.hostname = "vcr"
-  config.vm.provision :shell, path: "bootstrap.sh"  
+  config.vm.provision :shell, path: "bootstrap.sh"
   config.vm.network :private_network, ip: "192.168.50.4"
   config.hostsupdater.aliases = ["local.redmine.dev"]
   config.hostsupdater.remove_on_suspend = true
@@ -50,13 +50,15 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider "virtualbox" do |vb|
+  config.vm.provider "virtualbox" do |vb|
   #   # Don't boot with headless mode
   #   vb.gui = true
   #
   #   # Use VBoxManage to customize the VM. For example to change memory:
   #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+    vb.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    vb.customize ["modifyvm", :id, "--natdnshostresolver1", "off"]
+  end
   #
   # View the documentation for the provider you're using for more
   # information on available options.
